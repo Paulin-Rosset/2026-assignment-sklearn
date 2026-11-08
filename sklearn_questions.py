@@ -156,7 +156,8 @@ class RegistrationSplit(BaseCrossValidator):
         idx_test : ndarray
             The testing set indices for that split.
         """
-
+        if not pd.api.types.is_datetime64_any_dtype(X["registration_month"]):
+            raise ValueError("registration_month must be datetime dtype.")
 
         month_periods = X["registration_month"].dt.to_period("M").to_numpy()
         y_values = pd.Series(y).to_numpy()
