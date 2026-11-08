@@ -131,6 +131,7 @@ class RegistrationSplit(BaseCrossValidator):
         Returns
         -------
         n_splits : int
+        n_splits : int
             The number of valid splits.
         """
         return sum(1 for _ in self.split(X, y, groups))
@@ -155,12 +156,7 @@ class RegistrationSplit(BaseCrossValidator):
         idx_test : ndarray
             The testing set indices for that split.
         """
-        if "registration_month" not in X.columns:
-            raise ValueError("X must contain a 'registration_month' column.")
-        if not pd.api.types.is_datetime64_any_dtype(X["registration_month"]):
-            raise ValueError("registration_month must be datetime dtype.")
-        if y is None:
-            raise ValueError("y must be provided to check class coverage.")
+
 
         month_periods = X["registration_month"].dt.to_period("M").to_numpy()
         y_values = pd.Series(y).to_numpy()
